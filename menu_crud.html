@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Management</title>
+    <style>
+        /* General reset and body styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: url('bg6.jpg') no-repeat center center/cover;
+        }
+
+        /* Navbar styling (consistent with other pages) */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .navbar-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-left: 15px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar a:hover {
+            transform: scale(1.1);
+        }
+
+        /* Styling for the content */
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: white;
+        }
+        h3{
+            text-align: center;
+            margin: 20px 0;
+            color: white;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #000000;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Buttons styling */
+        button {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px; /* Add rounded corners */
+        }
+
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            margin-bottom: 10px;
+            border-radius: 5px; /* Add rounded corners */
+            transition: background-color 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        .delete-btn {
+            background: url('delete.png') no-repeat center; /* Provide the path to your delete icon */
+            background-size: contain;
+            width: 24px; /* Adjust the width according to your icon size */
+            height: 24px; /* Adjust the height according to your icon size */
+        }
+
+        .update-btn {
+            background: url('edit.png') no-repeat center; /* Provide the path to your edit icon */
+            background-size: contain;
+            width: 24px; /* Adjust the width according to your icon size */
+            height: 24px; /* Adjust the height according to your icon size */
+        }
+
+        /* Form styling */
+        form {
+            margin: 20px 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background:  rgba(255, 255, 255, 0.3); /* Gradient background */
+            padding: 10px; /* Increased padding for form */
+            border-radius: 10px; /* Rounded corners for the form */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Add shadow */
+            gap: 15px; /* Gap between elements */
+            margin-bottom: 30px; /* Margin to separate from container */
+        }
+
+        input, textarea {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px; /* Add rounded corners */
+        }
+
+        textarea {
+            resize: none; /* Disable resizing */
+        }
+
+        .container {
+    background: rgba(40, 40, 40, 0.5); /* Semi-transparent container */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners for the container */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Add shadow */
+    margin-bottom: 20px; /* Gap below container */
+    max-height: 400px; /* Set maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+        .formouter{
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent container */
+            padding: 20px;
+            border-radius: 10px; /* Rounded corners for the container */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Add shadow */
+            margin-bottom: 10px; /* Gap below container */
+
+        }
+        .footer {
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            animation: slideUp 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar (consistent with other pages) -->
+    <div class="navbar">
+        <h1><a href="admin_dashboard.html">Restaurant Management System</a></h1>
+        <div class="navbar-buttons">
+            <a href="admin_dashboard.html">Home</a>
+            <a href="menu_crud.html">Menu</a>
+            <a href="view_reservations.php">Reservations</a>
+            <a href="logout.php">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="formouter"><h1>Manage Menu Items</h1>
+        
+       
+        <form id="menuForm">
+            <h3>Add/Update Item</h3>
+            <input type="hidden" id="itemId" name="id">
+            <input type="text" id="itemName" name="name" placeholder="Name" required>
+            <textarea id="itemDescription" name="description" placeholder="Description" required></textarea>
+            <input type="number" step="0.01" id="itemPrice" name="price" placeholder="Price" required>
+        
+            <!-- Dropdown for Category -->
+            <select id="itemCategory" name="category" required style="width: 80%; height: 40px;">
+                <option value="" disabled selected>Select Category</option>
+                <option value="Appetizers">Appetizers</option>
+                <option value="Burgers">Burgers</option>
+                <option value="Pasta">Pasta</option>
+                <option value="Pizzas">Pizzas</option>
+                <option value="Salads">Salads</option>
+                <option value="Indian">Indian</option>
+                <option value="Seafood">Seafood</option>
+                <option value="Specialities">Specialities</option>
+                <option value="Desserts">Desserts</option>
+                <option value="Beverages">Beverages</option>
+            </select>
+        
+            <button type="submit" class="add-btn">Add/Update Item</button>
+        </form></div>
+
+    <div class="container">
+        
+
+        <table id="menuTable">
+            <thead>
+                <tr>
+                    <th style="color: white;">ID</th>
+                    <th style="color: white;">Name</th>
+                    <th style="color: white;">Description</th>
+                    <th style="color: white;">Price</th>
+                    <th style="color: white;">Category</th>
+                    <th style="color: white;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic content will be added here -->
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        // Fetch and display menu items
+        function loadMenuItems() {
+            fetch('menu_crud.php')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector("#menuTable tbody");
+                    tableBody.innerHTML = '';
+                    data.forEach(item => {
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td style="color: white;">${item.id}</td>
+                                <td style="color: white;">${item.name}</td>
+                                <td style="color: white;">${item.description}</td>
+                                <td style="color: white;">$${item.price}</td>
+                                <td style="color: white;">${item.category}</td>
+                                <td >
+                                    <button class="update-btn" onclick="editItem(${item.id}, '${item.name}', '${item.description}', ${item.price}, '${item.category}')"></button>
+                                    <button class="delete-btn" onclick="deleteItem(${item.id})"></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+
+        // Add or update menu item
+        document.getElementById('menuForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('itemId').value;
+            const name = document.getElementById('itemName').value;
+            const description = document.getElementById('itemDescription').value;
+            const price = document.getElementById('itemPrice').value;
+            const category = document.getElementById('itemCategory').value;
+            
+            const formData = new FormData();
+            formData.append('action', id ? 'update' : 'add');
+            formData.append('id', id);
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('category', category);
+
+            fetch('menu_crud.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                loadMenuItems();
+                document.getElementById('menuForm').reset();
+            });
+        });
+
+        // Edit item by populating form
+        function editItem(id, name, description, price, category) {
+            document.getElementById('itemId').value = id;
+            document.getElementById('itemName').value = name;
+            document.getElementById('itemDescription').value = description;
+            document.getElementById('itemPrice').value = price;
+            document.getElementById('itemCategory').value = category;
+        }
+
+        // Delete menu item
+        function deleteItem(id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                const formData = new FormData();
+                formData.append('action', 'delete');
+                formData.append('id', id);
+
+                fetch('menu_crud.php', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    loadMenuItems();
+                });
+            }
+        }
+
+        // Load menu items on page load
+        loadMenuItems();
+    </script>
+     <div class="footer">
+        &copy; 2024 Restaurant Management System | All Rights Reserved
+    </div>
+</body>
+</html>

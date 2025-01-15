@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management System</title>
+    <style>
+        /* Reset and default styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('bg3.jpg') no-repeat center/cover; /* Full-screen background image */
+            background-size: cover; /* Cover the entire screen */
+            color: #ffffff; /* Default text color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: auto; /* Prevent overflow for animations */
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background: rgba(0, 0, 0, 0.5); /* Change text color for contrast */
+            padding: 20px 30px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.5s ease-in-out; /* Slide down animation */
+        }
+
+        .navbar h1 {
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: transform 0.3s ease; /* Add transition for hover effect */
+        }
+
+        .navbar-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Transparent buttons with hover effect */
+        .navbar a {
+            color: #faf8f8; /* Change link color for contrast */
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: transparent; /* Transparent background */
+            border-radius: 25px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            position: relative; /* Position for pseudo-element */
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background-color: #e74c3c; /* Color for the underline effect */
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar a:hover {
+            transform: scale(1.1);
+        }
+
+        /* Main content styling */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.5); /* Add a dark overlay for better text contrast */
+            animation: fadeIn 1.5s ease-in-out;
+            width: 100%; /* Full width */
+        }
+
+        .content h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: slideUp 1.5s ease-in-out;
+        }
+
+        .content button {
+            padding: 12px 35px;
+            font-size: 18px;
+            border: none;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            animation: fadeInUp 2s ease-in-out;
+            position: relative; /* For the ripple effect */
+            overflow: hidden; /* Hide overflow for the ripple */
+        }
+
+        .content button:hover {
+            background-color: #c0392b;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .content button::after {
+            content: '';
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .content button:hover::after {
+            transform: translate(-50%, -50%) scale(1); /* Ripple effect */
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+        /* Floating Cart Icon */
+        .floating-cart {
+            position: fixed;
+            bottom: 20px; /* Distance from the bottom */
+            right: 20px; /* Distance from the right */
+            background-color: rgba(0, 0, 0, 0.5); /* Background color for the button */
+            color: white; /* Icon color */
+            border-radius: 50%; /* Circular button */
+            width: 60px; /* Button width */
+            height: 60px; /* Button height */
+            display: flex; /* Center the icon */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            text-decoration: none; /* Remove underline from link */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+            transition: background-color 0.3s ease; /* Smooth background change */
+        }
+
+        .floating-cart:hover {
+            background-color: #c0392b; /*Darker color on hover */
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content h2 {
+                font-size: 36px;
+            }
+
+            .content p {
+                font-size: 16px;
+            }
+
+            .navbar h1 {
+                font-size: 22px;
+            }
+
+            .navbar a {
+                font-size: 16px;
+            }
+        }
+        .history-section {
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            color: #fafafa;
+            padding: 40px;
+            margin: 50px 0; /* Spacing from other content */
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+            animation: fadeIn 1.5s ease-in-out; /* Fade-in effect */
+        }
+
+        .history-section h3 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .history-section p {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1><a href="index.html" style="color: #faf8f8; text-decoration: none;">Restaurant Management</a></h1>
+        <div class="navbar-buttons">
+            <a href="login.html"><i class="fas fa-sign-in-alt icon"></i>Sign In</a>
+            <a href="signup.html"><i class="fas fa-user-plus icon"></i>Sign Up</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Welcome to Our Restaurant!</h2>
+        <p>Experience the best dining with our exquisite menu. Enjoy fresh ingredients and delicious meals made just for you.</p>
+        <button onclick="location.href='signup.html'">Get Started</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Restaurant Management System | All Rights Reserved
+    </div>
+    
+</body>
+</html>
